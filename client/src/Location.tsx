@@ -3,25 +3,23 @@ import { OffsetProp } from "./utils";
 import Area from "./Area";
 import TimeDifference from "./TimeDifference";
 
-interface LocationContextType {
+const LocationContext = createContext<{
   hereOffset: OffsetProp | null;
   setHereOffset: React.Dispatch<React.SetStateAction<OffsetProp | null>>;
   thereOffset: OffsetProp | null;
   setThereOffset: React.Dispatch<React.SetStateAction<OffsetProp | null>>;
-}
+} | undefined>(undefined);
 
-const LocationContext = createContext<LocationContextType | undefined>(undefined);
-
-const LocationProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+function LocationProvider({ children }: { children: React.ReactNode }) {
   const [hereOffset, setHereOffset] = useState<OffsetProp | null>(null);
   const [thereOffset, setThereOffset] = useState<OffsetProp | null>(null);
-  
+
   return (
     <LocationContext.Provider value={{ hereOffset, setHereOffset, thereOffset, setThereOffset }}>
-      { children }
+      {children}
     </LocationContext.Provider>
   );
-};
+}
 
 export const useLocation = () => {
   const context = useContext(LocationContext);
@@ -31,7 +29,7 @@ export const useLocation = () => {
   return context;
 };
 
-const Location: React.FC = () => {
+export default function Location() {
   return (
     <div className="row">
       <LocationProvider>
@@ -42,5 +40,3 @@ const Location: React.FC = () => {
     </div>
   );
 }
-
-export default Location;

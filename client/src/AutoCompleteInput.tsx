@@ -5,15 +5,15 @@ import "awesomplete/awesomplete.css";
 import { useApp } from "./App";
 import { useLocation } from "./Location";
 
-const AutoCompleteInput: React.FC<{ isHere: boolean }> = ({ isHere }) => {
+export default function AutoCompleteInput({ isHere }: { isHere: boolean }) {
   const URL = process.env.REACT_APP_API_URL || '';
 
   const [awesomplete, setAwesomplete] = useState<Awesomplete | null>(null);
   const [suggestions, setSuggestions] = useState<CitiesProp>({});
   const suggestionsRef = useRef<CitiesProp>({});
   const inputRef = useRef<HTMLInputElement>(null);
-  const { hereLocation, setHereLocation, thereLocation, setThereLocation } = useApp();
-  const { hereOffset, setHereOffset, thereOffset, setThereOffset } = useLocation();
+  const { setHereLocation, setThereLocation } = useApp();
+  const { setHereOffset, setThereOffset } = useLocation();
 
   const onInput = async (query: string): Promise<void> => {
     const response = await fetch(URL + (URL.startsWith("http://localhost") ? `/api/search?query=${query}` : `?path=search&query=${query}`));
@@ -67,5 +67,3 @@ const AutoCompleteInput: React.FC<{ isHere: boolean }> = ({ isHere }) => {
     <input type="text" ref={inputRef} className="awesomplete" />
   );
 };
-
-export default AutoCompleteInput;

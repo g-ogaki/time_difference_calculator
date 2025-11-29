@@ -1,13 +1,13 @@
-export interface LocationProp {
+export type LocationProp = {
   lat: number;
   lng: number;
 }
 
-export interface CitiesProp {
+export type CitiesProp = {
   [cityname: string]: LocationProp
 }
 
-export interface OffsetProp {
+export type OffsetProp = {
   offset: number;
   timezone: string;
 }

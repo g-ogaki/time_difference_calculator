@@ -3,35 +3,33 @@ import { LocationProp } from "./utils";
 import Location from "./Location";
 import Map from "./Map";
 
-export interface AppContextType {
+const AppContext = createContext<{
   hereLocation: LocationProp | null;
   setHereLocation: React.Dispatch<React.SetStateAction<LocationProp | null>>;
   thereLocation: LocationProp | null;
   setThereLocation: React.Dispatch<React.SetStateAction<LocationProp | null>>;
-}
+} | undefined>(undefined);
 
-const AppContext = createContext<AppContextType | undefined>(undefined);
-
-const AppProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+function AppProvider({ children }: { children: React.ReactNode }) {
   const [hereLocation, setHereLocation] = useState<LocationProp | null>(null);
   const [thereLocation, setThereLocation] = useState<LocationProp | null>(null);
 
   return (
     <AppContext.Provider value={{ hereLocation, setHereLocation, thereLocation, setThereLocation }}>
-      { children }
+      {children}
     </AppContext.Provider>
   );
-};
+}
 
-export const useApp = () => {
+export function useApp() {
   const context = useContext(AppContext);
   if (context === undefined) {
     throw new Error("useApp must be used within the Provider.");
   }
   return context;
-};
+}
 
-const App: React.FC = () => {
+export default function App() {
   return (
     <AppProvider>
       <div className="container">
@@ -43,6 +41,4 @@ const App: React.FC = () => {
       </div>
     </AppProvider>
   );
-};
-
-export default App;
+}

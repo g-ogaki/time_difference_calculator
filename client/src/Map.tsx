@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import { useApp } from "./App";
 
-const MapController: React.FC = () => {
+function MapController() {
   const map = useMap();
-  const { hereLocation, setHereLocation, thereLocation, setThereLocation } = useApp();
+  const { hereLocation, thereLocation } = useApp();
 
-  const createCustomIcon = (color: string) => {
+  function createCustomIcon(color: string) {
     return L.icon({
       iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -17,8 +17,8 @@ const MapController: React.FC = () => {
       popupAnchor: [1, -34],
       shadowSize: [41, 41]
     });
-  };
-  
+  }
+
   const redIcon = createCustomIcon("red");
   const blueIcon = createCustomIcon("blue");
 
@@ -37,9 +37,9 @@ const MapController: React.FC = () => {
   }, [thereLocation]);
 
   return null;
-};
+}
 
-const Map: React.FC = () => {
+export default function Map() {
   return (
     <div className="row mt-5">
       <MapContainer center={[0, 0]} zoom={1} style={{ height: "400px" }}>
@@ -51,6 +51,4 @@ const Map: React.FC = () => {
       </MapContainer>
     </div>
   );
-};
-
-export default Map;
+}

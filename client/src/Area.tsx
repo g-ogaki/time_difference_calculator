@@ -1,8 +1,7 @@
-import React from "react";
 import Clock from "./Clock";
 import AutoCompleteInput from "./AutoCompleteInput";
 
-const Area: React.FC<{isHere: boolean}> = ({ isHere }) => {
+function Area({ isHere }: { isHere: boolean }) {
   return (
     <div id={isHere ? "here" : "there"} className="col-12 col-sm-6">
       <h2 className="my-3">{isHere ? "Your Location" : "Your Destination"}</h2>
