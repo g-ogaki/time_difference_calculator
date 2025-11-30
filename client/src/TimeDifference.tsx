@@ -15,7 +15,7 @@ export default function TimeDifference() {
 
   return (
     <div className="col-12">
-      <p>Time Difference: {timediff != null ? timediff / 3600 + " hours" : ""}</p>
+      <p>Time Difference: {timediff && timediff / 3600 + " hours"}</p>
     </div>
   );
 }
