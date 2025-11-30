@@ -6,8 +6,7 @@ import { useApp } from "./App";
 import { useLocation } from "./Location";
 
 const getApiUrl = (base: string, path: string, queryParams: string) => {
-  const isLocal = base.startsWith("http://localhost");
-  return isLocal
+  return base.startsWith("http://localhost")
     ? `${base}/api/${path}?${queryParams}`
     : `${base}?path=${path}&${queryParams}`;
 };
@@ -22,18 +21,16 @@ export default function AutoCompleteInput({ isHere }: { isHere: boolean }) {
   const { setHereLocation, setThereLocation } = useApp();
   const { setHereOffset, setThereOffset } = useLocation();
 
-  function fetchSuggestions(query: string) {
-    fetch(getApiUrl(URL, "search", `query=${query}`))
-      .then(response => response.json())
-      .then(data => {
-        suggestionsRef.current = data;
-        awesompleteRef.current && (awesompleteRef.current.list = Object.keys(suggestionsRef.current));
-      });
-  }
-
   function onInput(query: string) {
     debounceTimer.current && clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(() => fetchSuggestions(query), 500);
+    debounceTimer.current = setTimeout(() => {
+      fetch(getApiUrl(URL, "search", `query=${query}`))
+        .then(response => response.json())
+        .then(data => {
+          suggestionsRef.current = data;
+          awesompleteRef.current && (awesompleteRef.current.list = Object.keys(suggestionsRef.current));
+        });
+    }, 500);
   }
 
   function onComplete(city: string) {
