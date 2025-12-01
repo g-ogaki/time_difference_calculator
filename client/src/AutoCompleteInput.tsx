@@ -44,27 +44,26 @@ export default function AutoCompleteInput({ isHere }: { isHere: boolean }) {
   };
 
   useEffect(() => {
-    if (inputRef.current) {
-      awesompleteRef.current = new Awesomplete(inputRef.current, {
-        list: [],
-        minChars: 2,
-        autoFirst: true,
-        filter: Awesomplete.FILTER_STARTSWITH,
-      });
+    if (!inputRef.current) return;
+    const inputEl = inputRef.current;
+    awesompleteRef.current = new Awesomplete(inputEl, {
+      list: [],
+      minChars: 2,
+      autoFirst: true,
+      filter: Awesomplete.FILTER_STARTSWITH,
+    });
 
-      const inputEl = inputRef.current;
-      const handleInput = () => { onInput(inputEl.value); };
-      const handleSelectComplete = () => { onComplete(inputEl.value); };
+    const handleInput = () => { onInput(inputEl.value); };
+    const handleSelectComplete = () => { onComplete(inputEl.value); };
 
-      inputEl.addEventListener("input", handleInput);
-      inputEl.addEventListener("awesomplete-selectcomplete", handleSelectComplete);
+    inputEl.addEventListener("input", handleInput);
+    inputEl.addEventListener("awesomplete-selectcomplete", handleSelectComplete);
 
-      return () => {
-        inputEl.removeEventListener("input", handleInput);
-        inputEl.removeEventListener("awesomplete-selectcomplete", handleSelectComplete);
-        awesompleteRef.current?.destroy();
-      };
-    }
+    return () => {
+      inputEl.removeEventListener("input", handleInput);
+      inputEl.removeEventListener("awesomplete-selectcomplete", handleSelectComplete);
+      awesompleteRef.current?.destroy();
+    };
   }, []);
 
   return <input type="text" ref={inputRef} className="awesomplete" />;
