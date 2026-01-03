@@ -7,9 +7,9 @@
 This is an author's practice application in React with TypeScript. This is the author's first time using these languages, so it may not follow the best practices. Please let me know if you detect room for improvement.
 
 ## Quick Start
-You can try it: https://g-ogaki.github.io/time_difference_calculator/
+You can try it: https://g-ogaki.github.io/time-difference-calculator/
 
-The APIs are hosted on Google Apps Script, which I'm afraid makes this app less responsive.
+The APIs are hosted on Google Apps Script, which deteriorates responsiveness.
 
 ## For Developers
 
